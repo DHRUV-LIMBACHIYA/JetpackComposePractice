@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -19,14 +21,43 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Column(
-                verticalArrangement = Arrangement.SpaceEvenly
+                modifier = Modifier.padding(16.dp)
             ) {
-                ColumnComposablePractice()
-                RowComposablePractice()
+                BasicsOfModifiers()
             }
         }
     }
 
+}
+
+/**
+ * Composable demonstrate basic of modifiers.
+ * - chaining of modifiers method.
+ * - offset vs margin.
+ * - padding between views.
+ * - Spacer for adding space.
+ * - interaction(clickable).
+ */
+@Composable
+private fun BasicsOfModifiers() {
+    Column(
+        modifier = Modifier
+            .background(Color.Green)
+            .fillMaxWidth()
+            .fillMaxHeight(0.5f)
+            .border(10.dp, Color.Magenta)
+            .padding(10.dp)
+            .border(10.dp, Color.Blue)
+            .padding(10.dp)
+            .border(10.dp, Color.Cyan)
+            .padding(10.dp)
+    ) {
+        Text(text = "hello", modifier = Modifier
+            .padding(start = 10.dp, top = 10.dp)
+            .clickable { /* NO-OP */ })
+        Spacer(modifier = Modifier.height(20.dp))
+        Text("world", modifier = Modifier.offset(50.dp, 20.dp))
+    }
 }
 
 @Composable
@@ -52,7 +83,6 @@ private fun ColumnComposablePractice() {
         }
     }
 }
-
 
 @Composable
 private fun RowComposablePractice() {
