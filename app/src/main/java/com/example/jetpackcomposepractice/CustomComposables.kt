@@ -1,5 +1,6 @@
 package com.example.jetpackcomposepractice
 
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,7 +17,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -24,6 +30,48 @@ import androidx.compose.ui.unit.sp
  * Created by Dhruv Limbachiya on 25-08-2021.
  */
 
+
+@Composable
+fun StylingText(
+    fontFamily: FontFamily,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color(0xFF101010))
+    ) {
+        Text(
+            text = buildAnnotatedString {
+                withStyle(
+                    SpanStyle(
+                        Color.Green,
+                        50.sp,
+                        FontWeight.Normal
+                    )
+                ){
+                    append("J")
+                }
+                append("etpack")
+                withStyle(
+                    SpanStyle(
+                        Color.Green,
+                        50.sp,
+                        FontWeight.Normal
+                    )
+                ){
+                    append("C")
+                }
+                append("ompose")
+
+            },
+            fontSize = 30.sp,
+            color = Color.White,
+            fontFamily = fontFamily,
+            textDecoration = TextDecoration.LineThrough
+        )
+    }
+}
 
 @Composable
 fun ImageCard(
@@ -53,15 +101,15 @@ fun ImageCard(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color.Transparent,
-                            Color.Black
-                        ),
-                        startY = 300f
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                Color.Black
+                            ),
+                            startY = 300f
+                        )
                     )
-                )
-            ){}
+            ) {}
 
             Box(
                 modifier = Modifier
