@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -20,6 +22,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -30,6 +33,36 @@ import kotlin.random.Random
 /**
  * Created by Dhruv Limbachiya on 25-08-2021.
  */
+
+
+@Composable
+fun List() {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+//        items(5000) {
+//            Text(
+//                text = "Item $it",
+//                fontSize = 16.sp,
+//                fontWeight = FontWeight.Bold,
+//                modifier = Modifier.fillMaxWidth()
+//                    .padding(16.dp),
+//                textAlign = TextAlign.Center
+//            )
+//        }
+
+        itemsIndexed(
+            listOf("This","is","an","example","of","jetpack","compose","list")
+        ){ index,item ->
+            Text(
+                text = item,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.fillMaxWidth()
+                    .padding(16.dp),
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}
 
 @Composable
 fun GreetMe(
@@ -61,13 +94,17 @@ fun GreetMe(
                 label = {
                     Text(text = "Enter your name")
                 },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Box(
-                modifier = Modifier.fillMaxWidth().padding(end = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 16.dp),
                 contentAlignment = Alignment.BottomEnd
             ) {
                 Button(onClick = {
