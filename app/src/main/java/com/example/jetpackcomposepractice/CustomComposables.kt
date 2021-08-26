@@ -6,12 +6,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -28,11 +24,67 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 /**
  * Created by Dhruv Limbachiya on 25-08-2021.
  */
+
+@Composable
+fun GreetMe(
+    modifier: Modifier = Modifier,
+) {
+    val scaffoldState = rememberScaffoldState()
+    var text by remember {
+        mutableStateOf("")
+    }
+
+    val scope = rememberCoroutineScope()
+
+    Scaffold(
+        modifier = modifier
+            .fillMaxSize(),
+        scaffoldState = scaffoldState
+    ) {
+        Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            TextField(
+                value = text,
+                onValueChange = {
+                    text = it
+                },
+                label = {
+                    Text(text = "Enter your name")
+                },
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Box(
+                modifier = Modifier.fillMaxWidth().padding(end = 16.dp),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                Button(onClick = {
+                    scope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            "Hello $text",
+                            duration = SnackbarDuration.Short
+                        )
+                    }
+                }) {
+                    Text(text = "Pls greet me")
+                }
+            }
+        }
+    }
+}
+
 
 @Composable
 fun ColorBoxColumn() {
