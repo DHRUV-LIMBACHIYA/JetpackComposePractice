@@ -1,6 +1,5 @@
 package com.example.jetpackcomposepractice
 
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -11,33 +10,90 @@ import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlin.random.Random
 
 /**
  * Created by Dhruv Limbachiya on 25-08-2021.
  */
 
+@Composable
+fun ColorBoxColumn() {
+    Column {
+        val color = remember {
+            mutableStateOf(Color.Yellow)
+        }
+        ColorBox(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxSize()
+        ) {
+            color.value = it
+        }
+
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxSize()
+                .background(color.value)
+        )
+    }
+}
 
 @Composable
-fun StylingText(
-    fontFamily: FontFamily,
-    modifier: Modifier = Modifier
+fun ColorBox(
+    modifier: Modifier = Modifier,
+    updateColor: (Color) -> Unit
 ) {
     Box(
         modifier = modifier
+            .background(Color.Red)
+            .clickable {
+                updateColor(
+                    Color(
+                        Random.nextFloat(),
+                        Random.nextFloat(),
+                        Random.nextFloat(),
+                    )
+                )
+            }
+    )
+}
+
+
+@Composable
+fun StylingText() {
+    val fontFamily = FontFamily(
+        Font(R.font.lexend_thin, weight = FontWeight.Thin),
+        Font(R.font.lexend_black, weight = FontWeight.Black),
+        Font(R.font.lexend_bold, weight = FontWeight.Bold),
+        Font(R.font.lexend_extrabold, weight = FontWeight.ExtraBold),
+        Font(R.font.lexend_light, weight = FontWeight.Light),
+        Font(R.font.lexend_extralight, weight = FontWeight.ExtraLight),
+        Font(R.font.lexend_medium, weight = FontWeight.Medium),
+        Font(R.font.lexend_regular, weight = FontWeight.Normal),
+        Font(R.font.lexend_semibold, weight = FontWeight.SemiBold),
+    )
+
+    Box(
+        modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF101010))
     ) {
@@ -49,7 +105,7 @@ fun StylingText(
                         50.sp,
                         FontWeight.Normal
                     )
-                ){
+                ) {
                     append("J")
                 }
                 append("etpack")
@@ -59,7 +115,7 @@ fun StylingText(
                         50.sp,
                         FontWeight.Normal
                     )
-                ){
+                ) {
                     append("C")
                 }
                 append("ompose")
@@ -74,14 +130,13 @@ fun StylingText(
 }
 
 @Composable
-fun ImageCard(
-    painter: Painter,
-    title: String,
-    contentDescription: String,
-    modifier: Modifier = Modifier
-) {
+fun ImageCard() {
+    val painter = painterResource(id = R.drawable.kermit)
+    val title = "This is Kermit in the snow"
+    val contentDescription = "This is Kermit in the snow"
+
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth(0.5f)
             .padding(16.dp),
         shape = RoundedCornerShape(15.dp),
