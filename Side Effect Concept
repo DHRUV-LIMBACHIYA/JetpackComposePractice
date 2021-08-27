@@ -1,0 +1,26 @@
+What is side effect?
+An expression or function which is responsible for updating the global state variable value inside local environment.
+
+var globarVar = "hello"
+@Composable
+fun updateUi(){
+    globarVar = "world" // Side Effect.
+}
+
+
+
+Why Composable function should be Side Effect free?
+
+Consider the following scenario.
+
+var count = 0 // Global var
+@Composable
+fun UpdateUI(name: String) {
+    count++ // Side Effect. Updating global varible.
+
+    Text(name)
+}
+
+UpdateUI() composable will only recompose when there is change in name and it will recompose only Text() composable because Text() composable is depend on “name”. So here count++ expression is skipped during Recomposition and it will not update global “count” variable. And this thing will lead to bug or an unexpected app behavior.
+
+Conclusion : Do not put global state in Composable function because recomposition mechanism can skip that expression or code which is responsible for updating your global state.
