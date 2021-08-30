@@ -1,4 +1,4 @@
-package com.example.jetpackcomposepractice
+package com.example.jetpackcomposepractice.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jetpackcomposepractice.R
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
