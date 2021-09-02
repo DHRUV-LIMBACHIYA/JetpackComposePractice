@@ -3,8 +3,10 @@ package com.example.jetpackcomposepractice.composables
 import android.view.MotionEvent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +24,7 @@ import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposepractice.R
 import kotlin.math.PI
 import kotlin.math.atan2
@@ -29,6 +32,49 @@ import kotlin.math.atan2
 /**
  * Created by Dhruv Limbachiya on 31-08-2021.
  */
+
+
+@ExperimentalComposeUiApi
+@Composable
+fun MusicKnobWithVolumeBar() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF101010)),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .border(1.dp, Color.Green, RoundedCornerShape(10.dp))
+                .padding(30.dp)
+        ) {
+            var volume by remember {
+                mutableStateOf(0f)
+            }
+
+            var barCount by remember {
+                mutableStateOf(20)
+            }
+
+            MusicKnob(
+                modifier = Modifier.size(100.dp)
+            ) {
+                volume = it
+            }
+
+            Spacer(modifier = Modifier.width(20.dp))
+
+            VolumeBar(
+                modifier = Modifier.fillMaxWidth()
+                    .height(100.dp),
+                activeCount = (barCount * volume).toInt(),
+                barCount = barCount
+            )
+        }
+    }
+}
 
 @ExperimentalComposeUiApi
 @Composable

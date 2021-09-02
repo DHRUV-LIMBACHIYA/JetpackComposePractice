@@ -32,49 +32,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetpackComposePracticeTheme(darkTheme = false) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color(0xFF101010)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .border(1.dp, Color.Green, RoundedCornerShape(10.dp))
-                            .padding(30.dp)
-                    ) {
-                        var volume by remember {
-                            mutableStateOf(0f)
-                        }
 
-                        var barCount by remember {
-                            mutableStateOf(20)
-                        }
-
-                        MusicKnob(
-                            modifier = Modifier.size(100.dp)
-                        ) {
-                            volume = it
-                        }
-
-                        Spacer(modifier = Modifier.width(20.dp))
-
-                        VolumeBar(
-                            modifier = Modifier.fillMaxWidth()
-                                .height(100.dp),
-                            activeCount = (barCount * volume).toInt(),
-                            barCount = barCount
-                        )
-                    }
-                }
             }
         }
     }
 }
-
-
-
 
 
