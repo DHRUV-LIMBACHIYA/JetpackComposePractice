@@ -1,15 +1,12 @@
 package com.example.jetpackcomposepractice.composables.navigation
 
 import android.view.animation.OvershootInterpolator
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,9 +15,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.example.jetpackcomposepractice.R
+import com.example.jetpackcomposepractice.composables.BottomMenuItem
 import kotlinx.coroutines.delay
 
 /**
@@ -28,9 +27,7 @@ import kotlinx.coroutines.delay
  */
 
 @Composable
-fun Navigation() {
-    // Get the nav controller.
-    val navController = rememberNavController()
+fun Navigation(navController: NavHostController) {
 
     NavHost(navController = navController, startDestination = Screen.SplashScreen.route) {
         composable(Screen.SplashScreen.route) {
@@ -51,6 +48,71 @@ fun Navigation() {
         ) {
             DetailScreen(name = it.arguments?.getString("name"))
         }
+
+        composable(Screen.Notification.route) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Notification")
+            }
+        }
+
+        composable(Screen.Settings.route) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Settings")
+            }
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun BottomNavigationBar(
+    list: List<BottomMenuItem>,
+    navController: NavController,
+    modifier: Modifier,
+    onItemClick: (BottomMenuItem) -> Unit
+) {
+    val backStackEntry = navController.currentBackStackEntryAsState()
+
+    BottomNavigation(
+        modifier = modifier,
+        backgroundColor = Color.DarkGray,
+        elevation = 5.dp
+    ) {
+
+        list.forEach { item ->
+            val selected = item.route == backStackEntry.value?.destination?.route
+            BottomNavigationItem(
+                selected = selected,
+                onClick = {
+                    onItemClick(item)
+                },
+
+                icon = {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        if(item.badgeCount > 0) {
+                            BadgedBox(badge = {
+                                Text(text = item.badgeCount.toString())
+                            }) {
+                                Icon(imageVector = item.icon, contentDescription = item.name)
+                            }
+                        }else {
+                            Icon(imageVector = item.icon, contentDescription = item.name)
+                        }
+                        if(selected){
+                            Text(text = item.name, modifier = Modifier.align(Alignment.CenterHorizontally))
+                        }
+                    }
+                },
+                selectedContentColor = Color.Green,
+                unselectedContentColor = Color.Gray
+            )
+        }
     }
 }
 
@@ -63,7 +125,7 @@ fun SplashScreen(navController: NavController) {
         contentAlignment = Alignment.Center
     ) {
         val scale = remember {
-           Animatable(0f)
+            Animatable(0f)
         }
 
         LaunchedEffect(key1 = true) {
