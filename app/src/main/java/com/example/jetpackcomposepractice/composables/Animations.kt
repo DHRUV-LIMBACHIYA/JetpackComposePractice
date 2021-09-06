@@ -31,6 +31,20 @@ import androidx.compose.ui.unit.sp
  * Created by Dhruv Limbachiya on 30-08-2021.
  */
 
+
+@Composable
+private fun DropDownComposable() {
+    DropDown(
+        title = "Show content",
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Content Revealed",
+        )
+    }
+}
+
 @Composable
 fun DropDown(
     modifier: Modifier = Modifier,
